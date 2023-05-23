@@ -19,7 +19,7 @@ class Wheel:
 
     def __str__(self):
         if self.current_face is None:
-            return "Wheel must be spinned first"
+            raise Exception("Wheel must be spinned first")
         return self.current_face
     
 class SlotMachine:
