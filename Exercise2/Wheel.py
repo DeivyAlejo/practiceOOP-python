@@ -2,9 +2,9 @@ import random
 
 class Wheel:
     current_face = None
-    def __init__(self, faces=None):
-        if faces is None:
-            faces = []
+    def __init__(self, faces):
+        if len(faces) < 1 or faces in None:
+            raise Exception("Faces list must be greather than 0")
         else:
             self.faces = faces
     
@@ -29,13 +29,15 @@ class SlotMachine:
         if number_of_wheels > 0:
             for _ in range(number_of_wheels):
                 self.wheels.append(Wheel(faces))
-
+        
+            
     def spin_wheels(self):
         for wheel in self.wheels:
             wheel.spin()
             print(wheel)
 
 
-faces = ['1','2','3','4']
+# faces = ['1','2','3','4']
+faces = []
 slot_machine = SlotMachine(3,faces)
 slot_machine.spin_wheels()
