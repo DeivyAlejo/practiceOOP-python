@@ -27,11 +27,13 @@ class SlotMachine:
     wheels = []
     current_faces = []
     def __init__(self, number_of_wheels, faces):
+        self.numer_of_wheels = number_of_wheels
         if number_of_wheels > 0:
             for _ in range(number_of_wheels):
                 self.wheels.append(Wheel(faces))
         
     def spin_wheels(self):
+        self.current_faces = []
         for wheel in self.wheels:
             wheel.spin()
             self.current_faces.append(wheel.current_face)
@@ -40,7 +42,8 @@ class SlotMachine:
         payout_value = 0
         for face in self.wheels[0].faces:
             count = self.current_faces.count(face)
-            payout_value += (count-1)
+            if count - 1 > payout_value:
+                payout_value = count - 1
         return payout_value
     
     def __str__(self):
@@ -50,15 +53,24 @@ class SlotMachine:
         return faces
     
     def histogram(self):
+        list_payout = [0] * (self.numer_of_wheels)
+        # print(list_payout)
         for _ in range(1000000):
+            payout = 0
             self.spin_wheels()
-            self.payout()
+            # print(slot_machine)
+            payout = self.payout()
+            # print(payout)
+            list_payout[payout] += 1
+        print(list_payout)
 
 
 
-faces = ['1','2','3','4']
+
+faces = ['1','2','3','4','5','6']
 # faces = []
-slot_machine = SlotMachine(8,faces)
-slot_machine.spin_wheels()
-print(slot_machine)
-print(slot_machine.payout())
+slot_machine = SlotMachine(12,faces)
+# slot_machine.spin_wheels()
+# print(slot_machine)
+# print(slot_machine.payout())
+slot_machine.histogram()
